@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Count App</title>
+  <link rel="manifest" href="/manifest.json">
+  <style>
+    html, body {
+      padding: 0;
+      margin: 0;
+    }
+
+    main {
+      width: 100dvw;
+      height: 100dvh;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #value {
+      font-size: 3rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    button {
+      width: 4rem;
+      height: 4rem;
+      font-size: 2rem;
+    }
+  </style>
+
+</head>
+<body>
+  <main>
+    <div id="value"></div>
+    <div>
+      <button id="increaseBtn">+</button>
+      <button id="decreaseBtn">-</button>
+    </div>
+  </main>
+
+  <script lang="text/javascript">
+    const $value = document.getElementById('value');
+
+    const cnt = new Proxy({
+      value: 0,
+    }, {
+      set: function(obj, prop, value) {
+        if (prop !== 'value') {
+          return false;
+        }
+        
+        obj[prop] = value;
+        $value.innerText = value;
+        document.querySelector('#cnt')
+        return true;
+      }
+    });
+
+    cnt.value = 0;
+
+    document.querySelector('#increaseBtn').addEventListener('click', () => {
+      cnt.value += 1;
+    });
+    document.querySelector('#decreaseBtn').addEventListener('click', () => {
+      cnt.value -= 1;
+    });
+  </script>
+</body>
+</html>
